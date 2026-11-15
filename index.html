@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>北京到海南4-5天海岛路书</title>
+<script src="https://registry.npmmirror.com/echarts/5.6.0/files/dist/echarts.min.js"></script>
+<script src="https://registry.npmmirror.com/lucide/1.28.0/files/dist/umd/lucide.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{--bg:#F2FAF6;--tint:#E6F2EC;--surface:#FFFFFF;
+--t1:#0E3340;--t2:#4E6B74;--t3:#7E9AA3;
+--acc:#0E8C7E;--acc-h:#0A7065;--on:#FFFFFF;
+--good:#0E7C3A;--warn:#B45309;--bad:#C62F1F;
+--radius:16px;--btnr:14px;--bstr:10%;
+--ctrl:min(var(--radius),14px);
+--border:color-mix(in srgb,var(--t1) var(--bstr),transparent);
+background:var(--bg);color:var(--t2);
+font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;line-height:1.6}
+.card,.tile,.btn,.pill,.inp{corner-shape:squircle}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:50;background:rgba(242,250,246,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1060px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap}
+.nav-brand{font-weight:700;color:var(--t1);font-size:15px;margin-right:8px;flex-shrink:0}
+.nav-links{display:flex;gap:6px}
+.nav-links a{padding:6px 12px;border-radius:999px;font-size:13px;color:var(--t2);transition:.2s}
+.nav-links a.active{background:var(--acc);color:var(--on)}
+.hero{min-height:100vh;background-size:cover;background-position:center;position:relative;display:flex;align-items:flex-end}
+.hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,32,40,.18) 0%,rgba(6,32,40,.55) 55%,rgba(6,32,40,.85) 100%)}
+.hero-content{position:relative;z-index:2;max-width:1060px;margin:0 auto;padding:0 24px 56px;width:100%}
+.hero .eyebrow{display:inline-block;color:#D7F2EA;font-size:13px;letter-spacing:2px;margin-bottom:12px;border:1px solid rgba(215,242,234,.4);padding:4px 14px;border-radius:999px}
+.hero h1{color:#fff;font-size:clamp(32px,6vw,52px);font-weight:700;max-width:760px;line-height:1.15}
+.hero .sub{color:#E8F6F1;font-size:clamp(15px,2.6vw,19px);margin-top:14px;max-width:620px}
+.hero .params{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.hero .param{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:12px;font-size:13px;backdrop-filter:blur(4px)}
+.sect{padding:64px 0}
+.sect.tint{background:var(--tint)}
+.sect h2.sec-title{font-size:clamp(24px,4.5vw,32px);color:var(--t1);font-weight:700;text-align:center;margin-bottom:8px}
+.sect .sec-sub{text-align:center;color:var(--t3);font-size:14px;margin-bottom:40px;max-width:640px;margin-left:auto;margin-right:auto}
+.sec-head{text-align:center;margin-bottom:36px}
+.sec-head .pill{display:inline-block;color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,var(--surface));border-radius:999px;font-size:12px;padding:4px 14px;margin-bottom:10px;font-weight:600}
+.param-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.param-grid{grid-template-columns:repeat(4,1fr)}}
+.param-cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.param-cell .k{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:6px}
+.param-cell .k svg{width:15px;height:15px}
+.param-cell .v{font-size:16px;font-weight:700;color:var(--t1);margin-top:6px;line-height:1.3}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
+.badge.real{background:color-mix(in srgb,var(--good) 15%,var(--surface));color:var(--good)}
+.badge.est{background:color-mix(in srgb,var(--warn) 15%,var(--surface));color:var(--warn)}
+.day-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:28px}
+.day-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.day-num{background:var(--acc);color:var(--on);border-radius:14px;min-width:56px;text-align:center;padding:8px 6px;flex-shrink:0}
+.day-num .d{font-size:22px;font-weight:700;line-height:1}
+.day-num .w{font-size:11px;opacity:.85;margin-top:2px}
+.day-head h3{font-size:19px;color:var(--t1);font-weight:700;line-height:1.3}
+.day-head .mode{font-size:12px;color:var(--acc);margin-top:4px;font-weight:600}
+.day-body{display:block}
+@media(min-width:800px){.day-body{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:flex-start}}
+.col{display:flex;flex-direction:column;gap:16px}
+.map-box{width:100%}
+.map-box .cap{font-size:11px;color:var(--t3);text-align:center;margin-top:4px}
+.info-block{font-size:14px}
+.info-block h4{font-size:13px;color:var(--acc);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.info-block h4 svg{width:15px;height:15px}
+.info-block ul{list-style:none}
+.info-block li{padding:6px 0;border-bottom:1px dashed var(--border)}
+.info-block li:last-child{border-bottom:none}
+.info-block li b{color:var(--t1)}
+.spot{margin-top:6px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg)}
+.spot-btn{width:100%;text-align:left;background:none;border:none;padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:var(--t1)}
+.spot-btn svg{transition:transform .25s;flex-shrink:0}
+.spot.open .spot-btn svg{transform:rotate(180deg)}
+.spot-body{display:none;padding:2px 16px 16px;font-size:13.5px;color:var(--t2)}
+.spot.open .spot-body{display:block}
+.spot-body .lab{font-weight:700;color:var(--acc);margin:12px 0 4px;font-size:13px}
+.spot-body ul{list-style:none}
+.spot-body li{padding:3px 0}
+.spot-body img{border-radius:10px;margin-top:8px;width:100%;height:auto}
+.btn-nav{display:block;width:100%;text-align:center;background:var(--acc);color:var(--on);font-weight:700;padding:14px;border-radius:var(--btnr);font-size:15px;cursor:pointer;border:none}
+.btn-nav:hover,.btn-nav:focus{background:var(--acc-h);color:var(--on)}
+.appendix{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:20px}
+.appendix h3{font-size:16px;color:var(--t1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.appendix h3 svg{width:17px;height:17px}
+.appendix ul{list-style:none}
+.appendix li{padding:5px 0;border-bottom:1px dashed var(--border);font-size:14px}
+.appendix li:last-child{border:none}
+.appendix li b{color:var(--t1)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{color:var(--t1);font-weight:700;background:var(--tint)}
+footer{padding:30px 0 40px;text-align:center;color:var(--t3);font-size:12px;border-top:1px solid var(--border)}
+.link{color:var(--acc);display:inline-flex;align-items:center;gap:3px}
+.link:hover{color:var(--acc-h)}
+.link::after{content:"";width:6px;height:6px;border-right:1.6px solid currentColor;border-top:1.6px solid currentColor;transform:rotate(45deg)}
+.note{font-size:12px;color:var(--t3);margin-top:6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+<span class="nav-brand">海南路书</span>
+<div class="nav-links">
+<a href="#overview">概览</a>
+<a href="#day1">Day1</a>
+<a href="#day2">Day2</a>
+<a href="#day3">Day3</a>
+<a href="#day4">Day4</a>
+<a href="#day5">Day5</a>
+<a href="#appendix">附录</a>
+</div>
+</div>
+</nav>
+
+<div class="hero" style="background-image:url('https://images.pexels.com/photos/4242876/pexels-photo-4242876.jpeg?auto=compress&cs=tinysrgb&w=1600')">
+<div class="veil"></div>
+<div class="hero-content">
+<span class="eyebrow">本路书生成于 2026-11-15 · 沿海平原线路</span>
+<h1>北京 → 海南 · 4-5天海岛环线路书</h1>
+<p class="sub">海口 · 文昌 · 万宁 · 三亚 —— 沿海南东海岸线一路向南，椰风海韵、航天探秘、热带海湾与醉美沙滩一次集齐。每天 9 点后出发，悠闲不赶路。</p>
+<div class="params">
+<span class="param">往返直飞</span>
+<span class="param">环线自驾约320km</span>
+<span class="param">沿海低海拔</span>
+<span class="param">11月均温24-28°C</span>
+</div>
+</div>
+</div>
+
+<div class="sect" id="overview">
+<div class="container">
+<div class="sec-head">
+<span class="pill">一句话定位</span>
+<h2 class="sec-title">一条「飞机进岛 + 自驾环东线」的轻松海岛游</h2>
+<p class="sec-sub">北京直飞海口落地，随后沿海南东海岸自驾南下，串起海口人文老街、文昌航天基地、万宁海湾、三亚沙滩四大主题，日均车程 1.5-2 小时，适合亲子 / 情侣 / 首次来海南的朋友。</p>
+</div>
+<div class="param-grid">
+<div class="param-cell"><div class="k"><i data-lucide="calendar-days"></i>总天数</div><div class="v">4天，可延长至5天</div></div>
+<div class="param-cell"><div class="k"><i data-lucide="route"></i>总里程</div><div class="v">约320km（环线）</div></div>
+<div class="param-cell"><div class="k"><i data-lucide="coins"></i>预算区间</div><div class="v">人均3800-5600</div></div>
+<div class="param-cell"><div class="k"><i data-lucide="sun"></i>最佳季节</div><div class="v">11月-次年3月</div></div>
+</div>
+<p class="note" style="text-align:center;margin-top:14px">预算按双人出行均摊、经济型酒店+中档餐饮估算，机票为实时波动项，出行前请复核。</p>
+<div style="margin-top:36px">
+<h2 class="sec-title" style="font-size:22px">全程路线示意</h2>
+<p class="sec-sub">示意路线图，非真实轨迹与比例 · 按行程顺序排列节点</p>
+<div id="routeMap" style="width:100%;height:400px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)"></div>
+</div>
+</div>
+</div>
+
+<div class="sect tint" id="gear">
+<div class="container">
+<div class="sec-head"><span class="pill">行前准备</span><h2 class="sec-title">装备与准备清单</h2></div>
+<div class="appendix">
+<h3><i data-lucide="backpack"></i>装备清单</h3>
+<ul>
+<li><b>证件：</b>身份证（乘机/租车必备）、驾驶证及租车单。</li>
+<li><b>衣物：</b>11月海南短袖+防晒衣为主，备一件薄外套（空调/早晚）；泳衣泳镜、沙滩鞋、遮阳帽。</li>
+<li><b>防晒：</b>SPF50+ 防晒霜、墨镜、晴雨两用伞（午后偶有阵雨）。</li>
+<li><b>电子：</b>充电宝、车载充电器、防水手机袋（玩水用）。</li>
+<li><b>其他：</b>常用药（肠胃药/晕车药/防蚊液）、驱蚊喷雾、现金少量备用。</li>
+</ul>
+</div>
+<div class="appendix">
+<h3><i data-lucide="shield-check"></i>预约与提示</h3>
+<ul>
+<li>北京→海口<strong>往返机票</strong>建议提前 2-3 周预订，旺季（春节/国庆）上浮明显。</li>
+<li>文昌航天发射场、蜈支洲岛等热门景点<strong>需提前预约</strong>门票。</li>
+<li>自驾租车建议在<strong>海口美兰机场</strong>直接取还车，环线无需绕回。</li>
+<li>沿海平原、无高原反应，但紫外线强，注意防晒与补水。</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect" id="day1" style="padding-top:20px"><div class="container">
+<div class="day-card">
+<div class="day-head">
+<div class="day-num"><div class="d">1</div><div class="w">北京→海口</div></div>
+<div><h3>北京 ✈ 海口 · 骑楼老街 & 滨海夜</h3>
+<div class="mode">交通方式：飞机（北京→海口）+ 市区打车</div></div>
+</div>
+<div class="day-body">
+<div class="col">
+<div class="map-box"><div id="dayMap1" style="width:100%;height:240px"></div><div class="cap">示意路线 · 非真实轨迹</div></div>
+<button class="btn-nav" onclick="navTo(110.3486,20.0441,'海口美兰机场')">一键导航</button>
+<div class="info-block"><h4>本段信息</h4><ul><li><b>起点→终点：</b>北京 → 海口美兰机场</li><li><b>交通：</b>直飞约 3.5-4 小时 <span class='badge real'>🟢 示例时刻，以航司实时为准</span></li><li><b>建议航班：</b>09:00-09:30 起飞 → 约 13:00 落地（9点后出发）</li><li><b>落地后：</b>机场取车/打车约 40 分钟抵市区</li><li><b>海拔：</b>海口市区约 10-30m，无高反</li></ul></div>
+<div class="info-block"><h4>坑点提醒</h4><ul><li><b>午后退房高峰：</b>美兰机场打车排队，可提前约网约车。</li><li><b>骑楼老街傍晚人车混行：</b>留意电动单车，慢行。</li></ul></div>
+<div class="info-block"><h4>Plan B</h4><ul><li>若航班延误导致下午才到，骑楼老街改到 Day2 返程路过时逛；当晚直接去假日海滩看日落。</li></ul></div>
+<div class="info-block"><h4>住宿建议（¥300-400/晚）</h4><ul><li><b>主推：</b>海口骑楼老街附近·桔子水晶酒店（约¥320-390）</li><li><b>备选：</b>滨海大道·椰城大酒店（约¥300-360）</li><li><span class='note'>价格随淡旺季浮动，请在携程/飞猪核验当日房价</span></li></ul></div>
+</div>
+<div class="col">
+<div class="info-block"><h4>今日行程（9点后出发）</h4><ul><li><b>09:00</b> 北京大兴/首都机场起飞</li><li><b>约13:00</b> 落地海口美兰，取车/打车入市区</li><li><b>15:00-17:30</b> 骑楼老街·南洋风情街（椰雕、老爸茶、拍照）</li><li><b>18:00-19:00</b> 万绿园海滨步道散步</li><li><b>19:30-21:00</b> 假日海滩夜排档·清补凉</li></ul></div>
+<div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">骑楼老街 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>海口保存最完整的南洋骑楼建筑群，百年老街，砖红色墙面 + 雕花廊柱，白天与黄昏各有韵味。</p><img src="https://pixabay.com/get/gc2f538e1823c336ba7d00102b08bdfeba5a7b511fd6b7ea0418a6a65a9559035052126b04eac2b13ac12b747a452d2e548b34414c55f071449e72b449dc8ad9e_1280.jpg" alt="海口骑楼老街"><p><small><a class="link" href="https://pixabay.com/photos/haikou-china-buildings-architecture-111594/" target="_blank">Image by 12019 on Pixabay</a></small></p><div class="lab">拍照打卡点</div><ul><li>街口牌坊正对街道（低机位拍纵深）</li><li>彩色南洋窗台侧面（人像+拱廊）</li><li>黄昏17:30路灯初亮时氛围最佳</li></ul><div class="lab">周边美食</div><ul><li>老爸茶（骑楼内，人均¥30-50）</li><li>文昌鸡饭 / 海南粉（街头小店）</li><li>清补凉（椰奶底，¥10-15/碗）</li></ul><div class="lab">游览动线</div><ul><li>中山路→水巷口→博爱路，全程约1.5km，2小时逛完</li></ul></div></div>
+<div class="info-block"><h4>今日美食（已并入行程）</h4><ul><li><b>午餐：</b>骑楼老字号·老爸茶点 + 文昌鸡饭（人均¥40）</li><li><b>晚餐：</b>假日海滩夜排档·海鲜烧烤 + 糟粕醋火锅（人均¥90-130）</li><li><b>夜宵：</b>街头清补凉 / 椰青（¥10-15）</li></ul></div>
+</div>
+</div>
+</div>
+</div></div><div class="sect" id="day2" style="padding-top:20px"><div class="container">
+<div class="day-card">
+<div class="day-head">
+<div class="day-num"><div class="d">2</div><div class="w">海口→文昌→万宁</div></div>
+<div><h3>文昌航天探秘 & 石梅湾海湾</h3>
+<div class="mode">交通方式：自驾（海口→文昌→万宁）</div></div>
+</div>
+<div class="day-body">
+<div class="col">
+<div class="map-box"><div id="dayMap2" style="width:100%;height:240px"></div><div class="cap">示意路线 · 非真实轨迹</div></div>
+<button class="btn-nav" onclick="navTo(110.3499,19.5481,'文昌航天发射场')">一键导航</button>
+<div class="info-block"><h4>本段信息</h4><ul><li><b>海口→文昌：</b>约 80km，高速约 1.5h <span class='badge est'>⚪ AI估算</span></li><li><b>文昌→万宁：</b>约 110km，沿海大道约 2h</li><li><b>路况：</b>全程铺装高速+环岛公路，平坦好开</li><li><b>加油：</b>文昌/万宁沿途均有中石化、中石油，92号汽油充足</li></ul></div>
+<div class="info-block"><h4>坑点提醒</h4><ul><li><b>航天发射场：</b>有发射任务时周边道路临时管制，出行前查官方通告。</li><li><b>铜鼓岭盘山路：</b>弯多，慢行。</li></ul></div>
+<div class="info-block"><h4>Plan B</h4><ul><li>若航天发射场临时闭馆，改文昌铜鼓岭+石头公园海岸线，时间更充裕。</li></ul></div>
+<div class="info-block"><h4>住宿建议（¥300-400/晚）</h4><ul><li><b>主推：</b>万宁石梅湾·悦然湾度假酒店（约¥330-400）</li><li><b>备选：</b>兴隆镇·金手指温泉酒店（约¥300-380）</li><li><span class='note'>价格浮动，请在OTA平台核验当日房价</span></li></ul></div>
+</div>
+<div class="col">
+<div class="info-block"><h4>今日行程（9点后出发）</h4><ul><li><b>09:00</b> 自驾出发，海口→文昌（约1.5h）</li><li><b>10:45-13:00</b> 文昌航天发射场（观景平台+科普馆，提前预约）</li><li><b>13:30-14:30</b> 文昌市区午餐（文昌鸡）</li><li><b>15:00-16:00</b> 铜鼓岭·远眺卫星发射塔与海</li><li><b>17:30-19:00</b> 抵达万宁石梅湾，海边看日落</li></ul></div>
+<div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">文昌航天发射场 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>中国首个滨海航天发射场，可近距离看长征系列火箭发射塔与总装厂房，是海南独一份的「看火箭」体验。</p><img src="https://p3-volcsearch-sign.byteimg.com/tos-cn-i-xstd03g9pf/b37f6fd1b57b4cc38d30c96521704bed~tplv-obj.jpeg?lk3s=7acb411c&scene=volc_search" alt="文昌航天发射场"><p><small><a class="link" href="https://stock.tuchong.com/image/detail/1195155301023088664?source=doubao" target="_blank">图虫 · 中国文昌航天发射场</a></small></p><div class="lab">拍照打卡点</div><ul><li>观景平台正对发射塔（广角）</li><li>科普馆内长征火箭模型墙</li><li>铜鼓岭山顶远眺发射场+海岸同框</li></ul><div class="lab">周边美食</div><ul><li>文昌鸡（市区老店，人均¥50-80）</li><li>抱罗粉（早餐/小吃）</li></ul><div class="lab">游览动线</div><ul><li>发射场约1.5-2h，建议上午到（光线好、游客少）</li></ul></div></div><div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">万宁石梅湾 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>海南东线最静谧的海湾之一，青皮林 + 细白沙滩，椰风海岸，比三亚清静、消费更低。</p><img src="https://images.unsplash.com/photo-1727940584070-b257471f1b99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDE4MDczfDB8MHx8fHwxNzk0NzQ4MjA1fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="万宁石梅湾椰林海岸"><p><small><a class="link" href="https://unsplash.com/photos/palm-trees-line-the-side-of-a-road-near-the-ocean-5J0x5Fs8rjc" target="_blank">Photo by Debbie Marini on Unsplash</a></small></p><div class="lab">拍照打卡点</div><ul><li>青皮林海滨步道（黄昏逆光）</li><li>沙滩日落后蓝调时刻</li></ul><div class="lab">周边美食</div><ul><li>后安粉（万宁特色早餐）</li><li>和乐蟹（青蟹，当地招牌）</li></ul><div class="lab">游览动线</div><ul><li>石梅湾海边约1h，配合兴隆热带植物园可充实半天</li></ul></div></div>
+<div class="info-block"><h4>今日美食（已并入行程）</h4><ul><li><b>午餐：</b>文昌老字号·文昌鸡饭（人均¥50-80）</li><li><b>晚餐：</b>万宁石梅湾海鲜餐厅·和乐蟹+清蒸石斑（人均¥120-180）</li><li><b>夜宵：</b>椰青汁 / 兴隆咖啡（万宁是咖啡之乡）</li></ul></div>
+</div>
+</div>
+</div>
+</div></div><div class="sect" id="day3" style="padding-top:20px"><div class="container">
+<div class="day-card">
+<div class="day-head">
+<div class="day-num"><div class="d">3</div><div class="w">万宁→三亚</div></div>
+<div><h3>驶入三亚 · 亚龙湾 & 天涯海角</h3>
+<div class="mode">交通方式：自驾（万宁→三亚）+ 市内游</div></div>
+</div>
+<div class="day-body">
+<div class="col">
+<div class="map-box"><div id="dayMap3" style="width:100%;height:240px"></div><div class="cap">示意路线 · 非真实轨迹</div></div>
+<button class="btn-nav" onclick="navTo(109.635,18.214,'三亚亚龙湾')">一键导航</button>
+<div class="info-block"><h4>本段信息</h4><ul><li><b>万宁→三亚：</b>约 120km，环岛高速约 1.5-2h <span class='badge est'>⚪ AI估算</span></li><li><b>三亚市区→亚龙湾：</b>约 20km，约 30min</li><li><b>路况：</b>全程铺装；市区晚高峰17:00-19:00略堵</li><li><b>停车：</b>亚龙湾、天涯海角均有收费停车场</li></ul></div>
+<div class="info-block"><h4>坑点提醒</h4><ul><li><b>天涯海角旺季人多：</b>建议上午到、午后返。</li><li><b>亚龙湾海滩：</b>有免费公共区，部分酒店段封闭，看清指示。</li></ul></div>
+<div class="info-block"><h4>Plan B</h4><ul><li>若时间紧，天涯海角与亚龙湾二选一，另一处留 Day4 补玩。</li></ul></div>
+<div class="info-block"><h4>住宿建议（¥300-400/晚）</h4><ul><li><b>主推：</b>三亚大东海·海屿民宿（约¥320-390，离沙滩近）</li><li><b>备选：</b>亚龙湾·快捷商务酒店（约¥300-380）</li><li><span class='note'>价格浮动，请在OTA平台核验当日房价</span></li></ul></div>
+</div>
+<div class="col">
+<div class="info-block"><h4>今日行程（9点后出发）</h4><ul><li><b>09:00</b> 自驾出发，万宁→三亚（约1.5-2h）</li><li><b>11:00-13:00</b> 亚龙湾沙滩玩水、踏浪</li><li><b>13:30-14:30</b> 亚龙湾附近午餐（海鲜）</li><li><b>15:30-17:30</b> 天涯海角·「天涯」「海角」石刻</li><li><b>19:00</b> 大东海夜市·海鲜烧烤</li></ul></div>
+<div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">亚龙湾 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>三亚最负盛名的海湾，8公里月牙形海滩，沙细水清，号称「天下第一湾」，适合游泳、帆船、发呆。</p><img src="https://images.pexels.com/photos/15120505/pexels-photo-15120505.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="三亚亚龙湾海滩"><p><small><a class="link" href="https://www.pexels.com/photo/sea-shore-under-blue-sky-15120505/" target="_blank">Photo by yoca lu on Pexels</a></small></p><div class="lab">拍照打卡点</div><ul><li>公共沙滩正对海湾（广角海景）</li><li>椰林剪影日落</li><li>帆船/风筝冲浪海上运动抓拍</li></ul><div class="lab">周边美食</div><ul><li>亚龙湾海鲜大排档（人均¥120-180）</li><li>椰子饭 / 清补凉</li></ul><div class="lab">游览动线</div><ul><li>沙滩+水上项目约2-3h，上午到光线佳</li></ul></div></div><div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">天涯海角 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>三亚标志性景区，海边巨型花岗岩上镌刻「天涯」「海角」，是「天涯海角」一词的现实出处，寓意浪漫。</p><img src="https://p3-volcsearch-sign.byteimg.com/tos-cn-i-xstd03g9pf/c82bb100a97448da8b0740acf509000a~tplv-obj.jpeg?lk3s=7acb411c&scene=volc_search" alt="三亚天涯海角"><p><small><a class="link" href="https://stock.tuchong.com/image/detail/1199745238192095242?source=doubao" target="_blank">图虫 · 三亚天涯海角</a></small></p><div class="lab">拍照打卡点</div><ul><li>「天涯」巨石前（经典机位，人多需错峰）</li><li>海角石与椰林同框</li><li>情人桥上日落</li></ul><div class="lab">周边美食</div><ul><li>景区内椰青 / 小吃</li><li>出景区后市区海鲜晚餐</li></ul><div class="lab">游览动线</div><ul><li>全程约2h，建议下午15:30到（光线柔和、游客渐少）</li></ul></div></div>
+<div class="info-block"><h4>今日美食（已并入行程）</h4><ul><li><b>午餐：</b>亚龙湾海鲜大排档·蒜蓉蒸龙虾+椰子饭（人均¥120-180）</li><li><b>晚餐：</b>大东海夜市·海鲜烧烤+清补凉（人均¥100-160）</li></ul></div>
+</div>
+</div>
+</div>
+</div></div><div class="sect" id="day4" style="padding-top:20px"><div class="container">
+<div class="day-card">
+<div class="day-head">
+<div class="day-num"><div class="d">4</div><div class="w">三亚</div></div>
+<div><h3>蜈支洲岛一日 · 或南山文化</h3>
+<div class="mode">交通方式：自驾至码头 + 乘船</div></div>
+</div>
+<div class="day-body">
+<div class="col">
+<div class="map-box"><div id="dayMap4" style="width:100%;height:240px"></div><div class="cap">示意路线 · 非真实轨迹</div></div>
+<button class="btn-nav" onclick="navTo(109.605,18.311,'蜈支洲岛码头')">一键导航</button>
+<div class="info-block"><h4>本段信息</h4><ul><li><b>大东海→蜈支洲岛码头：</b>约 28km，约 40min <span class='badge est'>⚪ AI估算</span></li><li><b>乘船：</b>码头→蜈支洲岛约 20min（全天多班）</li><li><b>船票+上岛：</b>需提前网上预约，旺季建议订早班 <span class='badge real'>🟢 实时核验</span></li><li><b>上岛末班船：</b>约 17:00-17:30 前需返程</li></ul></div>
+<div class="info-block"><h4>坑点提醒</h4><ul><li><b>大风停航：</b>台风/大风天蜈支洲岛停航，出行前查天气。</li><li><b>岛上餐饮贵：</b>建议自带水和小食。</li></ul></div>
+<div class="info-block"><h4>Plan B</h4><ul><li>蜈支洲岛若停航/不想出海，改<strong>南山文化旅游区</strong>（108米海上观音，约30km），人文+海景。</li></ul></div>
+<div class="info-block"><h4>住宿建议（¥300-400/晚）</h4><ul><li>Day4 可续住 Day3 的大东海民宿，免搬行李；若订两晚价格更优。</li></ul></div>
+</div>
+<div class="col">
+<div class="info-block"><h4>今日行程（9点后出发）</h4><ul><li><b>09:00</b> 自驾前往蜈支洲岛码头</li><li><b>09:50</b> 乘船上岛（约20min）</li><li><b>10:30-15:00</b> 蜈支洲岛环岛游：情人桥、观日岩、潜水/水上项目</li><li><b>16:30</b> 返程回三亚</li><li><b>18:00</b> 第一市场海鲜自选加工</li></ul></div>
+<div class="spot"><button class="spot-btn" onclick="toggleSpot(this)">蜈支洲岛 · 展开攻略 <i data-lucide="chevron-down"></i></button><div class="spot-body"><p><b>看点：</b>三亚海水最清透的小岛，白沙细腻，是潜水、玩水的天花板；「情人桥」与观日岩为经典打卡点。</p><img src="https://p11-volcsearch-sign.byteimg.com/tos-cn-i-xv4ileqgde/f469bdbdfca34cadb81e7d86ef9b8f8d~tplv-obj.jpeg?lk3s=1515c32d&scene=volc_search" alt="蜈支洲岛"><p><small><a class="link" href="https://www.baike.com/wikiid/7240051007190859828" target="_blank">百度百科 · 蜈支洲岛</a></small></p><div class="lab">拍照打卡点</div><ul><li>情人桥（白色栈桥+蓝海）</li><li>观日岩（海蚀崖崖顶）</li><li>情人沙滩（人少，日出光好）</li></ul><div class="lab">周边美食</div><ul><li>岛上餐贵，建议带干粮</li><li>返程后第一市场海鲜加工</li></ul><div class="lab">游览动线</div><ul><li>环岛观光车+潜水，约4-5h，早班船避开人流</li></ul></div></div>
+<div class="info-block"><h4>今日美食（已并入行程）</h4><ul><li><b>午餐：</b>岛上简餐/自带干粮（¥30-60）</li><li><b>晚餐：</b>第一市场·自选海鲜+加工店（人均¥150-220）</li><li><b>夜宵：</b>椰青 / 水果拼盘</li></ul></div>
+</div>
+</div>
+</div>
+</div></div><div class="sect" id="day5" style="padding-top:20px"><div class="container">
+<div class="day-card">
+<div class="day-head">
+<div class="day-num"><div class="d">5</div><div class="w">可选</div></div>
+<div><h3>三亚返程 · 或延长一日休闲</h3>
+<div class="mode">交通方式：自驾 + 飞机返京</div></div>
+</div>
+<div class="day-body">
+<div class="col">
+<div class="map-box"><div id="dayMap5" style="width:100%;height:240px"></div><div class="cap">示意路线 · 非真实轨迹</div></div>
+<button class="btn-nav" onclick="navTo(109.5083,18.246,'三亚凤凰机场')">一键导航</button>
+<div class="info-block"><h4>本段信息</h4><ul><li><b>三亚→凤凰机场：</b>约 10-15km，约 20min <span class='badge est'>⚪ AI估算</span></li><li><b>三亚→北京：</b>直飞约 4 小时 <span class='badge real'>🟢 示例时刻，以航司实时为准</span></li><li><b>建议返程：</b>14:00 后航班（上午可再玩半天）</li></ul></div>
+
+<div class="info-block"><h4>Plan B</h4><ul><li>多留一天可去<strong>南山文化旅游区</strong>看海上观音，或<strong>后海村</strong>学冲浪（适合年轻人）。</li></ul></div>
+
+</div>
+<div class="col">
+<div class="info-block"><h4>今日行程（9点后出发）</h4><ul><li><b>方案A(4天)</b> 上午大东海慢玩+购物，午餐后退房，约13:00前往机场，14:00后航班返京</li><li><b>方案B(5天)</b> Day5 南山文化旅游区 / 后海冲浪，Day6 返程</li></ul></div>
+
+<div class="info-block"><h4>今日美食（已并入行程）</h4><ul><li><b>返程采购：</b>椰香饼、咖啡、南国椰子糖、黄灯笼辣椒酱</li><li><b>免税店：</b>三亚国际免税城（凤凰机场可提货），记得带身份证</li></ul></div>
+</div>
+</div>
+</div>
+</div></div><div class="sect" id="appendix"><div class="container">
+<div class="sec-head"><span class="pill">兜底与溯源</span><h2 class="sec-title">附录 · 应急与费用</h2></div>
+<div class="appendix"><h3><i data-lucide="phone-call"></i>应急信息</h3>
+<ul>
+<li><b>全国急救：</b>120 · <b>交通事故：</b>122 · <b>火警：</b>119</li>
+<li><b>海南旅游服务热线：</b>12345（含投诉/咨询）</li>
+<li><b>三亚市人民医院：</b>请出行前核实电话</li>
+<li><b>海口美兰机场问询：</b>请出行前核实电话</li>
+</ul></div>
+<div class="appendix"><h3><i data-lucide="wallet"></i>花费预估（人均，双人出行均摊）</h3>
+<div class="table-wrap"><table>
+<tr><th>项目</th><th>4天估算</th><th>备注</th></tr>
+<tr><td>往返机票</td><td>¥1400-2600</td><td>实时波动，提前订</td></tr>
+<tr><td>住宿（3晚×¥350）</td><td>¥1050</td><td>300-400/晚</td></tr>
+<tr><td>租车+油费</td><td>¥450-650</td><td>3天环线320km</td></tr>
+<tr><td>餐饮</td><td>¥700-1000</td><td>海鲜为主</td></tr>
+<tr><td>景点/船票</td><td>¥400-700</td><td>航天/蜈支洲等</td></tr>
+</table></div>
+<p class="note">价格数据为 2026-11 估算，均随淡旺季与实时行情浮动，出行前请核验。</p>
+</div>
+<div class="appendix"><h3><i data-lucide="clock"></i>生成信息与数据源</h3>
+<ul>
+<li><b>本路书生成于：</b>2026-11-15，易变信息基于该时刻的估算与公开资料。</li>
+<li><b>实时核验入口：</b>航司官网 / 12306（航班与高铁）· 携程飞猪（住宿）· 景区官方公众号（门票预约与开放时间）。</li>
+<li><b>未实时核验项：</b>航班时刻、票价、酒店房价、景区门票、开放时间、停航情况等，均标「⚪ AI估算」或「🟢 实时」，出行前请二次确认。</li>
+<li><b>海拔说明：</b>海南为沿海平原线路，无高原反应风险，未单列海拔剖面。</li>
+<li><b>示意路线图：</b>全页路线为示意，非真实轨迹与比例，导航请以高德实时路线为准。</li>
+</ul></div>
+</div></div><footer>本路书为旅行规划参考 · 示意图非真实轨迹 · 易变信息请出行前核验<br>超级小爱 AI 生成 · 2026-11-15</footer><script>
+lucide.createIcons();
+function toggleSpot(btn){
+  var spot=btn.closest('.spot');
+  spot.classList.toggle('open');
+  lucide.createIcons();
+}
+function navTo(lng,lat,name){
+  window.open('https://uri.amap.com/marker?position='+lng+','+lat+'&name='+encodeURIComponent(name),'_blank');
+}
+var placeNames=['北京(起)','海口','文昌','万宁','三亚(终)'];
+var AMP=0.10,PERIOD=10;
+var nodeData=placeNames.map(function(name,i,arr){var n=arr.length,t=n>1?i/(n-1):0.5;var x=+(0.05+t*0.90).toFixed(4);var phase=(i%PERIOD)/PERIOD;var tri=2*Math.abs(2*(phase-Math.round(phase)))-1;var y=+(0.5+AMP*tri).toFixed(4);return{name:name,x:x,y:y,symbolSize:(i===0||i===n-1)?26:17};});
+var linkData=[{source:'北京(起)',target:'海口',value:'约3.5h'},{source:'海口',target:'文昌',value:'约80km'},{source:'文昌',target:'万宁',value:'约110km'},{source:'万宁',target:'三亚(终)',value:'约120km'}];
+var chart=echarts.init(document.getElementById('routeMap'));
+chart.setOption({series:[{type:'graph',layout:'none',data:nodeData,links:linkData,roam:true,scaleLimit:{min:1,max:8},symbolSize:20,label:{show:true,position:'bottom',formatter:'{b}',fontSize:12},edgeLabel:{show:true,formatter:'{c}',fontSize:10},lineStyle:{color:'source',curveness:0.18,width:2},itemStyle:{borderColor:'#fff',borderWidth:2,color:function(p){return p.data.name.indexOf('起')!==-1||p.data.name.indexOf('终')!==-1?'#F5A623':'#0E8C7E';}}}]});
+window.addEventListener('resize',function(){chart.resize();});
+var dayRoutesData=[
+ {nodes:['北京(起)','海口'],links:[{source:'北京(起)',target:'海口',value:'约3.5h'}]},
+ {nodes:['海口','文昌','万宁'],links:[{source:'海口',target:'文昌',value:'80km'},{source:'文昌',target:'万宁',value:'110km'}]},
+ {nodes:['万宁','三亚'],links:[{source:'万宁',target:'三亚',value:'120km'}]},
+ {nodes:['三亚(起)','亚龙湾','蜈支洲岛码头','三亚(返)'],links:[{source:'三亚(起)',target:'亚龙湾',value:'20km'},{source:'亚龙湾',target:'蜈支洲岛码头',value:'25km'},{source:'蜈支洲岛码头',target:'三亚(返)',value:'28km'}]},
+ {nodes:['三亚','北京(终)'],links:[{source:'三亚',target:'北京(终)',value:'约4h'}]}
+];
+dayRoutesData.forEach(function(route,idx){
+  var el=document.getElementById('dayMap'+(idx+1));
+  if(!el)return;
+  var boxW=el.clientWidth,boxH=el.clientHeight;
+  var marginX=30,marginY=42;
+  var nd=route.nodes.map(function(name,i,arr){var n=arr.length,t=n>1?i/(n-1):0.5;var xr=+(0.05+t*0.90).toFixed(4);var phase=(i%PERIOD)/PERIOD;var tri=2*Math.abs(2*(phase-Math.round(phase)))-1;var yr=+(0.5+AMP*tri).toFixed(4);return{name:name,x:marginX+xr*(boxW-marginX*2),y:marginY+yr*(boxH-marginY*2)};});
+  var c=echarts.init(el);
+  c.setOption({series:[{type:'graph',layout:'none',data:nd,links:route.links,roam:true,scaleLimit:{min:1,max:8},symbolSize:15,label:{show:true,position:'bottom',formatter:'{b}',fontSize:11},edgeLabel:{show:true,formatter:'{c}',fontSize:9,color:'#7E9AA3'},lineStyle:{color:'source',curveness:0.15,width:2},itemStyle:{borderColor:'#fff',borderWidth:1.5,color:'#0E8C7E'}}]});
+  window.addEventListener('resize',function(){c.resize();});
+});
+var navLinks=document.querySelectorAll('.nav-links a');
+var sections=[];
+for(var i=0;i<navLinks.length;i++){var href=navLinks[i].getAttribute('href');if(href)sections.push(document.getElementById(href.replace('#','')));}
+function updateNav(){
+  var navH=document.querySelector('nav').offsetHeight;
+  var vh=window.innerHeight,current=0,bestVisible=-1;
+  for(var j=0;j<sections.length;j++){if(!sections[j])continue;var r=sections[j].getBoundingClientRect();var vt=Math.max(r.top,navH);var vb=Math.min(r.bottom,vh);var vis=Math.max(0,vb-vt);if(vis>bestVisible){bestVisible=vis;current=j;}}
+  for(var k=0;k<navLinks.length;k++){navLinks[k].classList.toggle('active',k===current);}
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+window.addEventListener('resize',updateNav,{passive:true});
+updateNav();
+</script>
+
+<script>(function(){
+var d=document,b=d.body;if(!b)return;
+var old=b.querySelectorAll('[data-aigc-mark],#__xas_aigc_watermark__');
+for(var k=0;k<old.length;k++)old[k].parentNode&&old[k].parentNode.removeChild(old[k]);
+var f=d.createElement("div");
+f.id="__xas_aigc_watermark__";
+f.setAttribute("data-aigc-mark","true");
+f.style.cssText="position:fixed;bottom:8px;right:12px;z-index:2147483647;font-size:11px;padding:3px 7px;font-family:system-ui,sans-serif;pointer-events:none;color:rgba(30,30,30,0.6);background:rgba(255,255,255,0.4);border:0.5px solid rgba(0,0,0,0.08);border-radius:4px;line-height:1.4;backdrop-filter:blur(8px);";
+var paths=["M14.0072 26.6377C14.2318 25.9475 13.3696 25.4389 12.8659 25.9611C9.56694 29.3941 6.9736 33.4696 5.35587 37.9788C-0.86998 55.1279 7.72006 74.1728 24.7867 80.6891C33.1499 83.8815 41.0252 82.7894 44.7212 81.8812C54.0056 79.6016 63.1537 72.4609 66.7114 63.4447C67.1039 62.4525 66.6252 61.3286 65.6404 60.9222C63.78 60.1548 61.9263 59.3896 60.3721 58.7471C59.46 58.3702 58.4117 58.7402 57.9398 59.6076C56.4287 62.3753 54.8496 65.0568 52.4945 67.2274C46.0349 73.5893 36.1675 75.8621 27.5956 72.9036C14.6833 68.6487 7.76998 54.5307 12.124 41.7683C12.3668 41.0553 12.4916 40.3038 12.4621 39.55C12.242 33.8125 12.8228 30.2955 14.0072 26.6377Z","M73.6785 14.313C74.3682 14.5378 74.8765 13.675 74.3546 13.171C70.9241 9.86968 66.8514 7.27451 62.3454 5.65564C45.2084 -0.574603 26.1769 8.0215 19.6651 25.1002C16.4751 33.4692 17.5664 41.3501 18.474 45.0488C20.7519 54.3396 27.8876 63.4943 36.8974 67.0544C37.8889 67.4472 39.012 66.9681 39.4182 65.9827C40.185 64.1209 40.9497 62.2659 41.5918 60.7107C41.9684 59.7979 41.5986 58.7489 40.7318 58.2767C37.9661 56.7645 35.2865 55.1843 33.1174 52.8275C26.76 46.3634 24.4888 36.489 27.4452 27.9111C31.6971 14.9897 45.8051 8.07145 58.5586 12.4285C59.271 12.6715 60.022 12.7964 60.7753 12.7668C66.5088 12.5466 70.0233 13.1278 73.6785 14.313Z","M85.9922 73.9549C85.7676 74.6451 86.6298 75.1537 87.1335 74.6315C90.4324 71.1985 93.0258 67.123 94.6435 62.6138C100.869 45.4647 92.2793 26.4198 75.2127 19.9035C66.8495 16.7111 58.9742 17.8033 55.2782 18.7114C45.9938 20.991 36.8456 28.1317 33.288 37.1479C32.8955 38.1401 33.3742 39.264 34.3589 39.6704C36.2194 40.4378 38.0731 41.203 39.6273 41.8455C40.5394 42.2224 41.5876 41.8524 42.0596 40.985C43.5706 38.2173 45.1498 35.5358 47.5049 33.3652C53.9645 27.0033 63.8319 24.7305 72.4038 27.689C85.3161 31.9439 92.2294 46.0619 87.8754 58.8243C87.6326 59.5373 87.5078 60.2888 87.5373 61.0426C87.7574 66.7801 87.1766 70.2971 85.9922 73.9549Z","M26.2674 86.2849C25.5777 86.0601 25.0694 86.9229 25.5913 87.4269C29.0219 90.7282 33.0945 93.3234 37.6028 94.9423C54.7398 101.173 73.7713 92.5764 80.2831 75.4977C83.4731 67.1287 82.3818 59.2478 81.4742 55.5491C79.1963 46.2583 72.0606 37.1036 63.0508 33.5435C62.0593 33.1507 60.9362 33.6298 60.53 34.6152C59.7632 36.477 58.9985 38.3297 58.3564 39.885C57.9798 40.7977 58.3496 41.8467 59.2163 42.3212C61.9821 43.8334 64.6617 45.4114 66.8285 47.7704C73.1859 54.2345 75.4571 64.1089 72.5007 72.6869C68.2488 85.6082 54.1408 92.5265 41.3874 88.1694C40.6749 87.9264 39.9239 87.8015 39.1706 87.8311C33.4371 88.0513 29.9226 87.4701 26.2674 86.2826V86.2849Z"];
+b.appendChild(f);
+var svg='<svg width="14" height="14" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline;vertical-align:-2px;margin:0 4px">';
+for(var i=0;i<paths.length;i++)svg+='<path d="'+paths[i]+'" fill="rgba(30,30,30,0.5)"/>';
+svg+="</svg>";
+f.innerHTML="本页面由"+svg+"超级小爱AI生成";
+})();</script>
+</body>
+</html>
